@@ -1,0 +1,134 @@
+﻿@model LocInfo.Models.Info
+
+@{
+    Layout = null;
+}
+<div class="col-sm-3">
+    <span class="catName">Coordinates</span>
+    <table class="table"><thead><tr><th>Longitude</th><th>Latitude</th></tr></thead>
+    <tbody><tr>
+        <td>@String.Format("{0:F6}", Convert.ToDouble(Model.Longitude))</td>
+        <td>@String.Format("{0:F6}", Convert.ToDouble(Model.Latitude))</td>
+    </tr></tbody>
+    </table>
+</div>
+
+<div class="col-sm-3">
+    <span class="catName">Data Sources</span>
+    <table class="table">
+        <thead><tr><th>Bus stops</th><th>Other places</th></tr></thead>
+        <tbody>
+            <tr>
+                <td>Translink SEQ_GTFS</td>
+                <td>Qld Spatial Catalogue</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-6">
+    <span class="catName">The Closest Stops </span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Distance</th>
+                <th>Name</th>
+                <th>Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stop in Model.BusStops)
+            {
+                <tr>
+                    <td>@stop.Distance m</td>
+                    <td><a href="@stop.Url" target="_blank">@stop.Name</a></td>
+                    <td>@stop.Code</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-6">
+    <span class="catName"> Art Galleries </span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Distance</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var place in Model.Galleries)
+            {
+                <tr>
+                    <td>@place.Distance m</td>
+                    <td>@place.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-6">
+    <span class="catName"> Museums </span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Distance</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var place in Model.Museums)
+            {
+                <tr>
+                    <td>@place.Distance m</td>
+                    <td>@place.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-6">
+    <span class="catName"> Post Offices</span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Distance</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var place in Model.PostOffices)
+            {
+                <tr>
+                    <td>@place.Distance m</td>
+                    <td>@place.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
+
+<div class="col-md-6">
+    <span class="catName"> Places of Worship </span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Distance</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var place in Model.Churches)
+            {
+                <tr>
+                    <td>@place.Distance m</td>
+                    <td>@place.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

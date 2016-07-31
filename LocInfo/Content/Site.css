@@ -1,0 +1,84 @@
+﻿body {
+    padding-bottom: 800px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+
+}
+
+#map{
+    height:600px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-height:600px){
+    #map {
+        height:350px;
+    }
+}
+
+@media screen and (max-height:650px) and (min-height: 601px){
+    #map {
+        height:400px;
+    }
+}
+
+@media screen and (max-height:700px) and (min-height: 651px){
+    #map {
+        height:450px;
+    }
+}
+
+@media screen and (max-height:750px) and (min-height: 701px){
+    #map {
+        height:500px;
+    }
+}
+
+@media screen and (max-height:800px) and (min-height: 751px){
+    #map {
+        height:550px;
+    }
+}
+
+.catName {
+    font-weight:bold;
+    font-size: 1.2em;
+    padding-bottom:5px;
+    padding-left:2px;
+}
+
+
+
+#getInfo {
+    min-width: 150px;
+}
+
+.leaflet-map-pane {
+    z-index: 2 !important;
+}
+
+.leaflet-google-layer {
+    z-index: 1 !important;
+}
+
+#answer {
+    padding: 20px;
+}

@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div id="map">
+
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input id="location" type="text" name="location" class="form-control" placeholder="Enter address here" />
+                <span class="input-group-btn">
+                    <button id="locate" type="button" class="btn btn-default">Locate</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="text-center">
+        <button id="getInfo" class="btn btn-success">Get Info</button>
+    </div>
+    <div id="answer"></div>
+</div>
+
+@section scripts {
+    <script src="http://maps.google.com/maps/api/js?v=3.23&key=AIzaSyD1Mz_60tVLXTegUbaVNS1qs5v2sar9F98"></script>
+    <script src="~/Scripts/leaflet-0.7.3.min.js"></script>
+    <script src="~/Scripts/lgoogle.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script>
+        $(function () {
+            map = L.map('map').setView([-27.4710107, 153.0234489], 11);
+
+            var googleLayer = new L.Google('ROADMAP');
+            map.addLayer(googleLayer);
+
+            var myIcon = L.icon({
+                iconUrl: '/Content/images/marker.png',
+
+                iconSize: [40, 55], // size of the icon
+                iconAnchor: [20, 54] // point of the icon which will correspond to marker's location
+            });
+
+            marker = L.marker([-27.4710107, 153.0234489], { icon: myIcon }).addTo(map);
+
+            map.on('move', function () {
+                marker.setLatLng(map.getCenter());
+            });
+
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    if ($("#location").is(":focus")) {
+                        $("#locate").click();
+                        return false;
+                    }
+                };
+            });
+
+            $("#locate").click(function () {
+                    var address = $("#location").val();
+
+                    $.ajax("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&region=au&key=AIzaSyD1Mz_60tVLXTegUbaVNS1qs5v2sar9F98")
+                        .done(function(data) {
+                            if (data.status == "OK") {
+                                $(".container").goTo();
+                                map.setView(new L.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng), 13);
+                                
+                                marker.setLatLng(new L.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+                            }
+                        });
+            });
+
+            $("#getInfo").click(function () {
+                $(this).addClass("disabled").text("Collecting data...");
+                var curPos = marker.getLatLng();
+                $.ajax({
+                    url:"/Home/GetInfo",
+                    method: "POST",
+                    data: {lng: curPos.lng, lat: curPos.lat},
+                    success: function (data) {
+
+                        $("#answer").html(data).goTo();
+                    }
+                }).always(function () {
+                    $("#getInfo").removeClass("disabled").text("Get Info");
+                });
+            });
+            });
+    </script>
+
+}
